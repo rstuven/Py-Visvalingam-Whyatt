@@ -1,4 +1,4 @@
-'''
+"""
 First is fuzzy circle.  This data comes from:
 
 import numpy as np
@@ -16,9 +16,10 @@ from polysimplify import VWSimplifier
 new_pts = np.load('fuzzy_circle.npy')
 simplified = VWSimplifier(new_pts)
 np.save('fuzzy_thresholds',simplified.thresholds)
-'''
+"""
 import numpy as np
 from polysimplify import VWSimplifier
+
 test_pts = np.load('fuzzy_circle.npy')
 simplified = VWSimplifier(test_pts)
 
@@ -28,7 +29,7 @@ test_thresholds = np.load('fuzzy_thresholds.npy')
 diff = current_thresholds - test_thresholds
 diff_percent = diff / test_thresholds
 
-if np.all( diff_percent[1:-1] < .00001)
-  print "Passed fuzzy circle test"
+if np.all(diff_percent[1:-1] < .00001):
+    print "Passed fuzzy circle test"
 else:
-  print "!! FAILED fuzzy circle test" 
+    print "!! FAILED fuzzy circle test"
