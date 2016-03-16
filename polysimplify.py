@@ -113,7 +113,7 @@ class VWSimplifier(object):
         pts = self.pts
         nmax = len(pts)
         real_areas = triangle_areas_from_array(pts)
-        real_indices = range(nmax)
+        real_indices = list(range(nmax))
 
         # destructable copies
         # ARG! areas=real_areas[:] doesn't make a copy!
@@ -266,10 +266,10 @@ except ImportError:
            correct module exists"""
 
         def __init__(*args, **kwargs):
-            print """
+            print("""
                   django.contrib.gis.gdal not found.
                   GDALSimplifier not available.
-                  """
+                  """)
 else:
     from json import loads
     import re
@@ -302,7 +302,7 @@ else:
                 name = geom.geom_type.upper()
                 self.Geometry = lambda w: fromstr(w)
                 self.pts = np.array(geom.tuple)
-            elif isinstance(geom, unicode) or isinstance(geom, str):
+            elif isinstance(geom, str) or isinstance(geom, str):
                 # assume wkt
                 # for WKT
                 def str2tuple(q):
@@ -343,7 +343,7 @@ else:
             self.simplifiers = [WKTSimplifier(self.pts)]
 
         def line2wkt(self, pts):
-            return u'LINESTRING %s' % pts
+            return 'LINESTRING %s' % pts
 
         def linemask(self, threshold):
             get_pts = self.get_pts
@@ -361,7 +361,7 @@ else:
             self.simplifiers = result
 
         def poly2wkt(self, list_of_pts):
-            return u'POLYGON (%s)' % ','.join(list_of_pts)
+            return 'POLYGON (%s)' % ','.join(list_of_pts)
 
         def polymask(self, threshold):
             get_pts = self.get_pts
@@ -386,7 +386,7 @@ else:
             outerlist = []
             for list_of_pts in list_of_list_of_pts:
                 outerlist.append('(%s)' % ','.join(list_of_pts))
-            return u'MULTIPOLYGON (%s)' % ','.join(outerlist)
+            return 'MULTIPOLYGON (%s)' % ','.join(outerlist)
 
         def multimask(self, threshold):
             loflofsims = self.simplifiers
@@ -404,7 +404,7 @@ else:
             return ret_func(result)
 
         def notimplemented(self, n):
-            print "This function is not yet implemented"
+            print("This function is not yet implemented")
 
         def from_threshold(self, threshold):
             precision = self.precision
@@ -452,7 +452,7 @@ if __name__ == "__main__":
     simplifier = VWSimplifier(pts)
     pts = simplifier.from_number(1000)
     end = time()
-    print "%s vertices removed in %02f seconds" % (n - len(pts), end - start)
+    print("%s vertices removed in %02f seconds" % (n - len(pts), end - start))
 
     import matplotlib
 
@@ -461,5 +461,5 @@ if __name__ == "__main__":
 
     plot.plot(pts[:, 0], pts[:, 1], color='r')
     plot.savefig('visvalingam.png')
-    print "saved visvalingam.png"
+    print("saved visvalingam.png")
     # plot.show()

@@ -30,6 +30,6 @@ diff = current_thresholds - test_thresholds
 diff_percent = diff / test_thresholds
 
 if np.all(diff_percent[1:-1] < .00001):
-    print "Passed fuzzy circle test"
+    print("Passed fuzzy circle test")
 else:
-    print "!! FAILED fuzzy circle test"
+    print("!! FAILED fuzzy circle test")
